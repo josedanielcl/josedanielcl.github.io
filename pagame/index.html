@@ -1,0 +1,86 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>payme</title>
+  <script src="../lib/jquery-3.3.1.min.js" type="text/javascript"></script>
+  <style type="text/css">
+    body {
+      background-color: #000010;
+      overflow: hidden;
+    }
+    #core {
+      position: absolute;
+      top: 50vh;
+      left: 50vw;
+      height: 2px;
+      width: 2px;
+    }
+    #refresh {
+      color: #fff;
+      border: solid 3px #888;
+      padding: 10px 10px 0px;
+      position: absolute;
+      top: 80vh;
+      left: 50vw;
+      width: 100px;
+      text-align: center;
+      font-family: monospace;
+      height: 1.5em;
+    }
+    .unselectable {
+      user-select: none;
+    }
+    @media (orientation: portrait) {
+      #core > img {
+        width: 90vw;
+      }
+      #counter {
+        font-size: 50px;
+        width: 90vw;
+      }
+      #refresh {
+        font-size: 40px;
+        width: 30vw;
+      }
+    }
+    .center-transform {
+      transform: translateX(-50%) translateY(-50%);
+    }
+    #counter {
+      color: #fff;
+      position: absolute;
+      top: 10vh;
+      left: 50vw;
+      height 1em;
+      font-family: monospace;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="core" class='center-transform'></div>
+  <div id="counter" class='center-transform'></div>
+  <div id="refresh" class='center-transform unselectable'>otro gif</div>
+  <script type="text/javascript">
+  	const GIFS_N = 13;
+    const TIMER = 5;
+
+    $('#core').append(
+      $('<img>').attr('src', `gifs/${Math.floor(Math.random()*GIFS_N)}.gif`)
+                .addClass('center-transform')
+                .css('z-index', '5')
+                .css('position', 'absolute')
+    );
+
+    const counter = $('#counter')
+    for (let i = TIMER; i > 0; i--) {
+      setTimeout(() => counter.text(`Redirigiendo a slach en ${i}`), (TIMER-i)*1000)
+    }
+	
+	const amount = parseInt(new URLSearchParams(window.location.search).get('$')) || 0;
+    setTimeout(() => { window.location.replace(`https://www.slach.cl/joseda/${amount ? amount : ''}`) }, TIMER*1000);
+
+    $('#refresh').on('click', () => { location.reload() });
+  </script>
+</body>
+
